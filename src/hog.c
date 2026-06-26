@@ -122,8 +122,11 @@ BT_GATT_SERVICE_DEFINE(
     BT_GATT_CHARACTERISTIC(BT_UUID_HIDS_CTRL_POINT, BT_GATT_CHRC_WRITE_WITHOUT_RESP,
                            BT_GATT_PERM_WRITE, NULL, write_ctrl_point, &ctrl_point));
 
+extern struct bt_conn *destination_connection(void);
+
 static void send_report(const uint8_t *data, uint8_t len) {
-    struct bt_conn *conn = zmk_ble_active_profile_conn();
+    // struct bt_conn *conn = zmk_ble_active_profile_conn();
+    struct bt_conn *conn = destination_connection();
     if (conn == NULL) {
         LOG_ERR("Not connected to active profile");
         return;
